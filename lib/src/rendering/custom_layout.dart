@@ -154,9 +154,10 @@ class BackgroundContentLayoutDelegate extends MultiChildLayoutDelegate {
         contentPoint.x,
         contentPoint.y,
       ),
-       print('X Offset is this: ${contentPoint.x}');
-        print('Y Offset is this: ${contentPoint.y}');
+      
     );
+    print('X Offset is this: ${contentPoint.x}');
+        print('Y Offset is this: ${contentPoint.y}');
     positionChild(
         BackgroundContentLayout.background,
         Offset(
