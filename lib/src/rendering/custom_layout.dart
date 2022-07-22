@@ -81,7 +81,7 @@ class BackgroundContentLayoutDelegate extends MultiChildLayoutDelegate {
       // Calculate distance to the furthest point of the content.
       final contentArea = Rect.fromLTWH(contentPoint.x, contentPoint.y,
           contentSize.width, contentSize.height);
-      print('Content area: $contentArea');
+    
       // This is equal to finding the max out of the distances to the corners of the Rect.
       // It is just the more Math-esque approach.
       // See the commented out code below for an intuitive approach.
@@ -154,6 +154,8 @@ class BackgroundContentLayoutDelegate extends MultiChildLayoutDelegate {
         contentPoint.x,
         contentPoint.y,
       ),
+       print('X Offset is this: ${contentPoint.x}');
+        print('Y Offset is this: ${contentPoint.y}');
     );
     positionChild(
         BackgroundContentLayout.background,
