@@ -151,7 +151,7 @@ class BackgroundContentLayoutDelegate extends MultiChildLayoutDelegate {
     positionChild(
       BackgroundContentLayout.content,
       Offset(
-        contentPoint.x,
+        189,
         contentPoint.y,
       ),
       
