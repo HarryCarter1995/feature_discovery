@@ -231,7 +231,7 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
   @override
   void didChangeDependencies() {
     _screenSize = MediaQuery.of(context).size;
-    print('Overlay screen size is: $screenSize);
+    print('Overlay screen size is: $screenSize');
 
     try {
       _bloc = Bloc.of(context);
