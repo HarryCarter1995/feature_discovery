@@ -44,6 +44,19 @@ class AnchoredOverlay extends StatelessWidget {
       );
 }
 
+Offset _getOffset() {
+  double finalWidth;
+  double finalHeight;
+  
+  final originalWidth = ResponsiveWrapper.of(context).screenWidth;
+  final originalHeight = ResponsiveWrapper.of(context).screenWidth;
+  final scaledWidth = ResponsiveWrapper.of(context).scaledWidth;
+  final scaledHeight = ResponsiveWrapper.of(context).scaledWidth;
+  
+  return Offset(scaledWidth - originalWidth, 0);
+  
+}
+
 class OverlayBuilder extends StatefulWidget {
   final bool? showOverlay;
   final Function(BuildContext context)? overlayBuilder;
