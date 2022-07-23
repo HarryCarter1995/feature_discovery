@@ -234,7 +234,7 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
     print('Overlay width: ${ResponsiveWrapper.of(context).screenWidth / ResponsiveWrapper.of(context).scaledWidth}');
     print('Overlay height: ${ResponsiveWrapper.of(context).screenHeight / ResponsiveWrapper.of(context).scaledHeight}');
     
-    _screenSize = MediaQuery.of(context).size;
+    _screenSize = Size(0.8571428571428572, 0.8571428571428572);
     
     try {
       _bloc = Bloc.of(context);
