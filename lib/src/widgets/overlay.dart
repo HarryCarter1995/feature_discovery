@@ -637,66 +637,69 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
     }
 
     return Transform.scale(
-      scaleX: _rescale(context),
-      child: Stack(
-        children: <Widget>[
-          background,
-          CustomMultiChildLayout(
-            delegate: BackgroundContentLayoutDelegate(
-              overflowMode: widget.overflowMode,
-              contentPosition: contentPosition,
-              backgroundCenter: backgroundCenter,
-              backgroundRadius: backgroundRadius,
-              anchor: anchor,
-              contentOffsetMultiplier: contentOffsetMultiplier,
-              state: _state!,
-              transitionProgress: _transitionProgress,
+      scale: _rescale(context),
+      child: Transform.translate(
+        offset: Offset(contentPosition * _rescale(context)),
+        child: Stack(
+          children: <Widget>[
+            background,
+            CustomMultiChildLayout(
+              delegate: BackgroundContentLayoutDelegate(
+                overflowMode: widget.overflowMode,
+                contentPosition: contentPosition,
+                backgroundCenter: backgroundCenter,
+                backgroundRadius: backgroundRadius,
+                anchor: anchor,
+                contentOffsetMultiplier: contentOffsetMultiplier,
+                state: _state!,
+                transitionProgress: _transitionProgress,
+              ),
+              children: <Widget>[
+                LayoutId(
+                  id: BackgroundContentLayout.background,
+                  child: _Background(
+                    transitionProgress: _transitionProgress!,
+                    color: widget.backgroundColor ?? Theme.of(context).primaryColor,
+                    defaultOpacity: widget.backgroundOpacity,
+                    state: _state!,
+                    overflowMode: widget.overflowMode,
+                    tryDismissThisThenAll: tryDismissThisThenAll,
+                    backgroundDismissible: widget.backgroundDismissible,
+                    onBackgroundTap: widget.onBackgroundTap,
+                  ),
+                ),
+                LayoutId(
+                  id: BackgroundContentLayout.content,
+                  child: Content(
+                    state: _state!,
+                    transitionProgress: _transitionProgress!,
+                    title: widget.title,
+                    description: widget.description,
+                    textColor: widget.textColor,
+                    overflowMode: widget.overflowMode,
+                    backgroundCenter: backgroundCenter,
+                    backgroundRadius: backgroundRadius,
+                    width: contentWidth,
+                  ),
+                ),
+              ],
             ),
-            children: <Widget>[
-              LayoutId(
-                id: BackgroundContentLayout.background,
-                child: _Background(
-                  transitionProgress: _transitionProgress!,
-                  color: widget.backgroundColor ?? Theme.of(context).primaryColor,
-                  defaultOpacity: widget.backgroundOpacity,
-                  state: _state!,
-                  overflowMode: widget.overflowMode,
-                  tryDismissThisThenAll: tryDismissThisThenAll,
-                  backgroundDismissible: widget.backgroundDismissible,
-                  onBackgroundTap: widget.onBackgroundTap,
-                ),
-              ),
-              LayoutId(
-                id: BackgroundContentLayout.content,
-                child: Content(
-                  state: _state!,
-                  transitionProgress: _transitionProgress!,
-                  title: widget.title,
-                  description: widget.description,
-                  textColor: widget.textColor,
-                  overflowMode: widget.overflowMode,
-                  backgroundCenter: backgroundCenter,
-                  backgroundRadius: backgroundRadius,
-                  width: contentWidth,
-                ),
-              ),
-            ],
-          ),
-          _Pulse(
-            state: _state!,
-            transitionProgress: _transitionProgress!,
-            anchor: anchor,
-            color: widget.targetColor,
-          ),
-          _TapTarget(
-            state: _state!,
-            transitionProgress: _transitionProgress!,
-            anchor: anchor,
-            color: widget.targetColor,
-            onPressed: tryCompleteThis,
-            child: widget.tapTarget,
-          ),
-        ],
+            _Pulse(
+              state: _state!,
+              transitionProgress: _transitionProgress!,
+              anchor: anchor,
+              color: widget.targetColor,
+            ),
+            _TapTarget(
+              state: _state!,
+              transitionProgress: _transitionProgress!,
+              anchor: anchor,
+              color: widget.targetColor,
+              onPressed: tryCompleteThis,
+              child: widget.tapTarget,
+            ),
+          ],
+        ),
       ),
     );
   }
