@@ -637,7 +637,7 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
     }
 
     return Transform.scale(
-      scale: _rescale(context),
+      scaleX: _rescale(context),
       child: Stack(
         children: <Widget>[
           background,
