@@ -35,7 +35,7 @@ class AnchoredOverlay extends StatelessWidget {
             final box = context.findRenderObject() as RenderBox;
 
             final center = box.size.center(box.localToGlobal(
-              _getOffset()
+              _getOffset(context)
             ));
             return overlayBuilder!(context, center);
           },
@@ -44,7 +44,7 @@ class AnchoredOverlay extends StatelessWidget {
       );
 }
 
-Offset _getOffset() {
+Offset _getOffset(BuildContext context) {
   double finalWidth;
   double finalHeight;
 
