@@ -638,7 +638,7 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
     return Transform.scale(
       scale: _rescale(context),
       child: Transform.translate(
-        offset: Offset(contentPosition * _rescale(context)),
+        offset: Offset(contentPosition.dx * _rescale(context), contentPosition.dy * _rescale(context)),
         child: Stack(
           children: <Widget>[
             background,
