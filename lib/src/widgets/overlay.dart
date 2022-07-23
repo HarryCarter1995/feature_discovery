@@ -580,7 +580,6 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
   }
 
   Widget _buildOverlay(Offset anchor) {
-    print('making overlay');
     // This will be assigned either above or below, i.e. trivial from
     // widget.contentLocation will be converted to above or below.
     final contentLocation = _nonTrivialContentOrientation(anchor);
