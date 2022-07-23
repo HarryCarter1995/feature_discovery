@@ -35,27 +35,14 @@ class AnchoredOverlay extends StatelessWidget {
             /// calculate center and path to up
             final box = context.findRenderObject() as RenderBox;
 
-            final center = box.size.center(box.localToGlobal(
-              _getOffset(context)
+            final center = box.size.center(box.globalToLocal(
+              const Offset(0.0, 0.0),
             ));
             return overlayBuilder!(context, center);
           },
           child: child,
         ),
       );
-}
-
-Offset _getOffset(BuildContext context) {
-  double finalWidth;
-  double finalHeight;
-
-  final originalWidth = ResponsiveWrapper.of(context).screenWidth;
-  final originalHeight = ResponsiveWrapper.of(context).screenWidth;
-  final scaledWidth = ResponsiveWrapper.of(context).scaledWidth;
-  final scaledHeight = ResponsiveWrapper.of(context).scaledWidth;
-
-  return Offset(originalWidth / scaledWidth, 0);
-
 }
 
 class OverlayBuilder extends StatefulWidget {
