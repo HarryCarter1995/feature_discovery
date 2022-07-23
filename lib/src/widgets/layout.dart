@@ -54,7 +54,7 @@ Offset _getOffset(BuildContext context) {
   final scaledWidth = ResponsiveWrapper.of(context).scaledWidth;
   final scaledHeight = ResponsiveWrapper.of(context).scaledWidth;
 
-  return Offset(originalWidth - scaledWidth, 0);
+  return Offset(originalWidth + scaledWidth, 0);
 
 }
 
