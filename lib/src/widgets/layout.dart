@@ -38,7 +38,7 @@ class AnchoredOverlay extends StatelessWidget {
             final box = Overlay.of(context, rootOverlay: true)!.context.findRenderObject() as RenderBox;
        
             final center = box.size.center(box.localToGlobal(
-                   const Offset(0.0, 0.0),
+                   const Offset(220.0, 500.0),
             ));
             print('Overlay POS: $center');
             return overlayBuilder!(context, center);
