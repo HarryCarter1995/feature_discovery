@@ -13,6 +13,7 @@ class DescribedFeatureOverlay extends StatefulWidget {
   /// Otherwise, multiple overlays would show at once, which is currently
   /// only possible if [allowShowingDuplicate] is set to `true`.
   final String featureId;
+  final GlobalKey globalKey;
 
   /// By default, for every feature id, i.e. for every step in the feature discovery,
   /// there can only be a single active overlay at a time as the default value
@@ -141,6 +142,7 @@ class DescribedFeatureOverlay extends StatefulWidget {
     Key? key,
     required this.featureId,
     required this.tapTarget,
+    required this.globalKey,
     this.backgroundColor,
     this.targetColor = Colors.white,
     this.textColor = Colors.white,
@@ -162,11 +164,12 @@ class DescribedFeatureOverlay extends StatefulWidget {
     this.barrierDismissible = true,
     this.backgroundDismissible = false,
     this.onBackgroundTap,
-  })  : assert(
-          barrierDismissible == true || onDismiss == null,
-          'Cannot provide both a barrierDismissible and onDismiss function\n'
-          'The onDismiss function will never get executed when barrierDismissible is set to false.',
-        ),
+  })
+      : assert(
+  barrierDismissible == true || onDismiss == null,
+  'Cannot provide both a barrierDismissible and onDismiss function\n'
+      'The onDismiss function will never get executed when barrierDismissible is set to false.',
+  ),
         super(key: key);
 
   @override
@@ -230,7 +233,9 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
 
   @override
   void didChangeDependencies() {
-    _screenSize = MediaQuery.of(context).size;
+    _screenSize = MediaQuery
+        .of(context)
+        .size;
 
     try {
       _bloc = Bloc.of(context);
@@ -287,13 +292,13 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
     _eventsSubscription = _eventsStream!.listen((EventType event) async {
       switch (event) {
         case EventType.open:
-          // Only try opening when the active feature id matches the id of this widget.
+        // Only try opening when the active feature id matches the id of this widget.
           if (_bloc.activeFeatureId != widget.featureId) return;
           await _open();
           break;
         case EventType.complete:
         case EventType.dismiss:
-          // This overlay was the active feature before this event if it is either opening or already opened.
+        // This overlay was the active feature before this event if it is either opening or already opened.
           if (_state != FeatureOverlayState.opened &&
               _state != FeatureOverlayState.opening) return;
           await _completeOrDismiss(event, force: true);
@@ -308,14 +313,14 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
     _openController = AnimationController(
         vsync: this, duration: widget.openDuration)
       ..addListener(
-          () => setState(() => _transitionProgress = _openController.value));
+              () => setState(() => _transitionProgress = _openController.value));
 
     _pulseController = AnimationController(
         vsync: this, duration: widget.pulseDuration)
       ..addListener(
-          () => setState(() => _transitionProgress = _pulseController.value))
+              () => setState(() => _transitionProgress = _pulseController.value))
       ..addStatusListener(
-        (AnimationStatus status) {
+            (AnimationStatus status) {
           if (status == AnimationStatus.completed) {
             _pulseController.forward(from: 0);
           }
@@ -323,14 +328,14 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
       );
 
     _completeController =
-        AnimationController(vsync: this, duration: widget.completeDuration)
-          ..addListener(() =>
-              setState(() => _transitionProgress = _completeController.value));
+    AnimationController(vsync: this, duration: widget.completeDuration)
+      ..addListener(() =>
+          setState(() => _transitionProgress = _completeController.value));
 
     _dismissController = AnimationController(
         vsync: this, duration: widget.dismissDuration)
       ..addListener(
-          () => setState(() => _transitionProgress = _dismissController.value));
+              () => setState(() => _transitionProgress = _dismissController.value));
   }
 
   Future<void> _open() async {
@@ -483,8 +488,8 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
       switch (_state) {
         case FeatureOverlayState.opening:
           final adjustedPercent =
-              const Interval(0.0, 0.8, curve: Curves.easeOut)
-                  .transform(_transitionProgress!);
+          const Interval(0.0, 0.8, curve: Curves.easeOut)
+              .transform(_transitionProgress!);
           return Offset.lerp(startingBackgroundPosition,
               endingBackgroundPosition, adjustedPercent);
         case FeatureOverlayState.completing:
@@ -537,8 +542,8 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
       switch (_state) {
         case FeatureOverlayState.opening:
           final adjustedPercent =
-              const Interval(0.0, 0.8, curve: Curves.easeOut)
-                  .transform(_transitionProgress!);
+          const Interval(0.0, 0.8, curve: Curves.easeOut)
+              .transform(_transitionProgress!);
           return Offset.lerp(startingBackgroundPosition,
               endingBackgroundPosition, adjustedPercent);
         case FeatureOverlayState.completing:
@@ -567,7 +572,7 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
   Widget _buildOverlay(Offset anchor) {
     // This will be assigned either above or below, i.e. trivial from
     // widget.contentLocation will be converted to above or below.
-    
+
     final contentLocation = _nonTrivialContentOrientation(anchor);
     assert(contentLocation != ContentLocation.trivial);
 
@@ -640,7 +645,9 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
               id: BackgroundContentLayout.background,
               child: _Background(
                 transitionProgress: _transitionProgress!,
-                color: widget.backgroundColor ?? Theme.of(context).primaryColor,
+                color: widget.backgroundColor ?? Theme
+                    .of(context)
+                    .primaryColor,
                 defaultOpacity: widget.backgroundOpacity,
                 state: _state!,
                 overflowMode: widget.overflowMode,
@@ -684,7 +691,9 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
   }
 
   @override
-  Widget build(BuildContext context) => AnchoredOverlay(
+  Widget build(BuildContext context) =>
+      AnchoredOverlay(
+        globalKey: widget.globalKey,
         showOverlay: _state != FeatureOverlayState.closed,
         overlayBuilder: (BuildContext context, Offset anchor) =>
             _buildOverlay(anchor),
@@ -744,13 +753,14 @@ class _Background extends StatelessWidget {
     }
 
     Widget result = LayoutBuilder(
-      builder: (context, constraints) => Container(
-        // The size is controlled in BackgroundContentLayoutDelegate.
-        width: constraints.biggest.width,
-        height: constraints.biggest.height,
-        decoration: BoxDecoration(
-            shape: BoxShape.circle, color: color.withOpacity(opacity)),
-      ),
+      builder: (context, constraints) =>
+          Container(
+            // The size is controlled in BackgroundContentLayoutDelegate.
+            width: constraints.biggest.width,
+            height: constraints.biggest.height,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: color.withOpacity(opacity)),
+          ),
     );
 
     result = GestureDetector(
@@ -828,19 +838,20 @@ class _Pulse extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) => state == FeatureOverlayState.closed
-      ? Container()
-      : CenterAbout(
-          position: anchor,
-          child: Container(
-            width: radius * 2,
-            height: radius * 2,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: color.withOpacity(opacity),
-            ),
+  Widget build(BuildContext context) =>
+      state == FeatureOverlayState.closed
+          ? Container()
+          : CenterAbout(
+        position: anchor,
+        child: Container(
+          width: radius * 2,
+          height: radius * 2,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: color.withOpacity(opacity),
           ),
-        );
+        ),
+      );
 }
 
 class _TapTarget extends StatelessWidget {
@@ -901,7 +912,8 @@ class _TapTarget extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) => CenterAbout(
+  Widget build(BuildContext context) =>
+      CenterAbout(
         position: anchor,
         child: Container(
           height: 2 * radius,
