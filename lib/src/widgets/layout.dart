@@ -24,9 +24,10 @@ class AnchoredOverlay extends StatelessWidget {
   final bool? showOverlay;
   final Widget Function(BuildContext, Offset anchor)? overlayBuilder;
   final Widget? child;
+  final GlobalKey globalKey;
 
   const AnchoredOverlay(
-      {Key? key, this.showOverlay, this.overlayBuilder, this.child})
+      {Key? key, this.showOverlay, this.overlayBuilder, this.child, this.globalKey})
       : super(key: key);
 
   @override
@@ -35,19 +36,14 @@ class AnchoredOverlay extends StatelessWidget {
           showOverlay: showOverlay,
           overlayBuilder: (BuildContext overlayContext) {
             /// calculate center and path to up
-            final box = context.findRenderObject() as RenderBox;
-            final halfWidth = MediaQuery.of(context).size.width / 2;
-            final halfHeight = MediaQuery.of(context).size.height / 2;
-            
-            final topLeft = box.size.center(box.localToGlobal(
-                   Offset(0, 0),
-            ));
+            //final box = overlayContext.findRenderObject() as RenderBox;
+            final box = globalKey.currentContext!.findRenderObject() as RenderBox;
             
             final center = box.size.center(box.localToGlobal(
                    const Offset(0.0, 0.0),
             ));
             
-            return overlayBuilder!(context, topLeft);
+            return overlayBuilder!(context, center);
           },
           child: child,
         ),
