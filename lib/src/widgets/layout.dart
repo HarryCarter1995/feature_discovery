@@ -9,9 +9,6 @@ class CenterAbout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Left POS: ${position!.dx}');
-    print('Top POS: ${position!.dy}');
-
     return Positioned(
       top: position!.dy,
       left: position!.dx ,
@@ -38,7 +35,7 @@ class AnchoredOverlay extends StatelessWidget {
           showOverlay: showOverlay,
           overlayBuilder: (BuildContext overlayContext) {
             /// calculate center and path to up
-            final box = context.findRenderObject() as RenderBox;
+            final box = Overlay.of(context).context.findRenderObject() as RenderBox;
              print('Box size: ${box.size}');
             final center = box.size.center(box.localToGlobal(
                    const Offset(0.0, 0.0),
