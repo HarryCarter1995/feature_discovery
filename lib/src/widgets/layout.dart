@@ -36,12 +36,18 @@ class AnchoredOverlay extends StatelessWidget {
           overlayBuilder: (BuildContext overlayContext) {
             /// calculate center and path to up
             final box = Overlay.of(context, rootOverlay: true)!.context.findRenderObject() as RenderBox;
-       
-            final center = box.size.center(box.localToGlobal(
-                   const Offset(220.0, 500.0),
+            final halfWidth = MediaQuery.of(context).width / 2;
+            final halfHeight = MediaQuery.of(context).height / 2;
+            
+            final topLeft = box.size.center(box.localToGlobal(
+                   const Offset(-halfWidth, -halfHeight),
             ));
-            print('Overlay POS: $center');
-            return overlayBuilder!(context, center);
+            
+            final center = box.size.center(box.localToGlobal(
+                   const Offset(0.0, 0.0),
+            ));
+            
+            return overlayBuilder!(context, topLeft);
           },
           child: child,
         ),
