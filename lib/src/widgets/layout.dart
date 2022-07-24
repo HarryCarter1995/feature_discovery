@@ -9,9 +9,9 @@ class CenterAbout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Left POS: ${position.dx}');
-    print('Top POS: ${position.dy}');
-    
+    print('Left POS: ${position!.dx}');
+    print('Top POS: ${position!.dy}');
+
     return Positioned(
       top: position!.dy,
       left: position!.dx ,
