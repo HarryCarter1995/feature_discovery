@@ -5,7 +5,6 @@ import 'package:feature_discovery/src/foundation.dart';
 import 'package:feature_discovery/src/rendering.dart';
 import 'package:feature_discovery/src/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 class DescribedFeatureOverlay extends StatefulWidget {
   static const double kDefaultBackgroundOpacity = 0.96;
@@ -231,11 +230,8 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
 
   @override
   void didChangeDependencies() {
-    print('Size is: ${MediaQuery.of(context).size}');
-    
-    //_screenSize = MediaQuery.of(context).size;
-    _screenSize = Size(411.4285, 866.285);
-    
+    _screenSize = MediaQuery.of(context).size;
+
     try {
       _bloc = Bloc.of(context);
 
@@ -568,25 +564,12 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
     return 1;
   }
 
-  double _rescale(BuildContext context) {
-    try {
-      return ResponsiveWrapper.of(context).screenWidth / ResponsiveWrapper.of(context).scaledWidth;
-    } catch (_) {
-      return 1;
-    }
-  }
-
-  double _getOffset(BuildContext context) {
-    try {
-      return ResponsiveWrapper.of(context).screenWidth - ResponsiveWrapper.of(context).scaledWidth;
-    } catch (_) {
-      return 1;
-    }
-  }
-
   Widget _buildOverlay(Offset anchor) {
     // This will be assigned either above or below, i.e. trivial from
     // widget.contentLocation will be converted to above or below.
+    
+    print('Anchor POS: $anchor');
+    
     final contentLocation = _nonTrivialContentOrientation(anchor);
     assert(contentLocation != ContentLocation.trivial);
 
