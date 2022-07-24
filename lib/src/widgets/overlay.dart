@@ -568,8 +568,6 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
     // This will be assigned either above or below, i.e. trivial from
     // widget.contentLocation will be converted to above or below.
     
-    print('Anchor POS: $anchor');
-    
     final contentLocation = _nonTrivialContentOrientation(anchor);
     assert(contentLocation != ContentLocation.trivial);
 
