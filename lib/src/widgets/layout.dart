@@ -40,7 +40,7 @@ class AnchoredOverlay extends StatelessWidget {
             final halfHeight = MediaQuery.of(context).height / 2;
             
             final topLeft = box.size.center(box.localToGlobal(
-                   const Offset(-halfWidth, -halfHeight),
+                   Offset(-halfWidth, -halfHeight),
             ));
             
             final center = box.size.center(box.localToGlobal(
