@@ -36,8 +36,8 @@ class AnchoredOverlay extends StatelessWidget {
           overlayBuilder: (BuildContext overlayContext) {
             /// calculate center and path to up
             final box = Overlay.of(context, rootOverlay: true)!.context.findRenderObject() as RenderBox;
-            final halfWidth = MediaQuery.of(context).width / 2;
-            final halfHeight = MediaQuery.of(context).height / 2;
+            final halfWidth = MediaQuery.of(context).size.width / 2;
+            final halfHeight = MediaQuery.of(context).size.height / 2;
             
             final topLeft = box.size.center(box.localToGlobal(
                    Offset(-halfWidth, -halfHeight),
