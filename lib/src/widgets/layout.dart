@@ -27,7 +27,7 @@ class AnchoredOverlay extends StatelessWidget {
   final GlobalKey globalKey;
 
   const AnchoredOverlay(
-      {Key? key, this.showOverlay, this.overlayBuilder, this.child, this.globalKey})
+      {Key? key, this.showOverlay, this.overlayBuilder, this.child, required this.globalKey})
       : super(key: key);
 
   @override
