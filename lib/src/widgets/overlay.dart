@@ -231,13 +231,9 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
 
   @override
   void didChangeDependencies() {
-   final overlayWidth = ResponsiveWrapper.of(context).screenWidth / ResponsiveWrapper.of(context).scaledWidth;
-    final overlayHeight = ResponsiveWrapper.of(context).screenHeight / ResponsiveWrapper.of(context).scaledHeight;
-    final width   = ResponsiveWrapper.of(context).screenWidth * overlayWidth;
-    final height = ResponsiveWrapper.of(context).screenHeight * overlayHeight;
-    print('Updated :)');
+    print('Size is: ' + MediaQuery.of(context).size);
     
-    _screenSize = Size(width, height);
+    _screenSize = MediaQuery.of(context).size;
     
     try {
       _bloc = Bloc.of(context);
