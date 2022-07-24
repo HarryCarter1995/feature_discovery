@@ -9,6 +9,12 @@ class CenterAbout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Positioned(
+    
+    
+    
+        print('Left pos: ${position.dx}');
+        print('Top pos: ${position.dy}');
+    
         top: position!.dy,
         left: position!.dx + 69,
         child: FractionalTranslation(
