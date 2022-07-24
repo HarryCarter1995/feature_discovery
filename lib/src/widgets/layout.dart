@@ -8,20 +8,19 @@ class CenterAbout extends StatelessWidget {
   const CenterAbout({Key? key, this.position, this.child}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Positioned(
+  Widget build(BuildContext context) {
+    print('Left POS: ${position.dx}');
+    print('Top POS: ${position.dy}');
     
-    
-    
-        print('Left pos: ${position.dx}');
-        print('Top pos: ${position.dy}');
-    
-        top: position!.dy,
-        left: position!.dx + 69,
-        child: FractionalTranslation(
-          translation: const Offset(-0.5, -0.5),
-          child: child,
-        ),
-      );
+    return Positioned(
+      top: position!.dy,
+      left: position!.dx ,
+      child: FractionalTranslation(
+        translation: const Offset(-0.5, -0.5),
+        child: child,
+      ),
+    );
+  }
 }
 
 class AnchoredOverlay extends StatelessWidget {
